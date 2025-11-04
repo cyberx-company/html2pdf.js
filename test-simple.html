@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>اختبار سريع - HTML2PDF Advanced</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 800px;
+      margin: 50px auto;
+      padding: 20px;
+      background: #f0f0f0;
+    }
+
+    .container {
+      background: white;
+      padding: 40px;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
+
+    h1 {
+      color: #667eea;
+      text-align: center;
+    }
+
+    .content {
+      background: #f8f9fa;
+      padding: 30px;
+      border-radius: 10px;
+      margin: 20px 0;
+      border: 2px solid #667eea;
+    }
+
+    button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      margin: 10px 5px;
+      font-weight: bold;
+    }
+
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    }
+
+    .buttons {
+      text-align: center;
+      margin-top: 30px;
+    }
+
+    .status {
+      text-align: center;
+      margin: 20px 0;
+      padding: 15px;
+      background: #e7f3ff;
+      border-radius: 8px;
+      display: none;
+    }
+
+    .status.show {
+      display: block;
+    }
+
+    .info {
+      background: #fff3cd;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid #ffc107;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>🔥 اختبار سريع - HTML2PDF Advanced 🔥</h1>
+
+    <div class="info">
+      <strong>📌 تعليمات:</strong>
+      <ul>
+        <li>اضغط على أي زر أدناه لتصدير المحتوى</li>
+        <li>سيتم تحميل الملف تلقائياً</li>
+        <li>جرّب جودات وصيغ مختلفة!</li>
+      </ul>
+    </div>
+
+    <!-- المحتوى للتصدير -->
+    <div id="contentToExport" class="content">
+      <h2 style="color: #667eea;">محتوى للتصدير 📄</h2>
+
+      <p>
+        هذا نص تجريبي لاختبار <strong>نظام التصدير المتقدم</strong> الذي يحتوي على
+        ميزات خرافية!
+      </p>
+
+      <h3>الميزات الرئيسية:</h3>
+      <ul>
+        <li>⚡ جودة عالية جداً - حتى 300 DPI</li>
+        <li>🎨 تأثيرات احترافية</li>
+        <li>📦 معالجة دفعات</li>
+        <li>🧠 تحليل ذكي</li>
+        <li>🔒 أمان وحماية</li>
+      </ul>
+
+      <h3>الاستخدامات:</h3>
+      <ol>
+        <li>تقارير مالية</li>
+        <li>فواتير</li>
+        <li>شهادات</li>
+        <li>كتالوجات منتجات</li>
+        <li>مستندات رسمية</li>
+      </ol>
+
+      <p style="text-align: center; margin-top: 30px; font-size: 18px; color: #667eea;">
+        <strong>🚀 نظام تصدير خورافي - يخوف حرفياً! 🚀</strong>
+      </p>
+    </div>
+
+    <div id="status" class="status">
+      <span id="statusText">جاري المعالجة...</span>
+    </div>
+
+    <div class="buttons">
+      <h3>جرّب الآن:</h3>
+
+      <div>
+        <button onclick="exportUltra()">🔥 ULTRA جودة خيالية</button>
+        <button onclick="exportHigh()">⭐ جودة عالية</button>
+        <button onclick="exportBalanced()">⚖️ متوازن</button>
+      </div>
+
+      <div>
+        <button onclick="exportWithWatermark()">💧 مع علامة مائية</button>
+        <button onclick="exportWithHeaderFooter()">📋 مع رأس وتذييل</button>
+      </div>
+
+      <div>
+        <button onclick="exportPrintReady()">🖨️ جاهز للطباعة</button>
+        <button onclick="exportEmailFriendly()">📧 للإيميل</button>
+      </div>
+
+      <div>
+        <button onclick="exportMultiFormat()">🎯 صيغ متعددة</button>
+        <button onclick="exportPNG()">🖼️ PNG</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- المكتبات المطلوبة -->
+  <script src="dist/html2pdf.bundle.min.js"></script>
+  <script src="src/plugin/advanced-exporter.js"></script>
+  <script src="src/advanced.js"></script>
+
+  <script>
+    // إنشاء مصدّر مع تتبع التقدم
+    const exporter = new AdvancedExporter();
+
+    // عرض الحالة
+    function showStatus(text) {
+      const status = document.getElementById('status');
+      const statusText = document.getElementById('statusText');
+      statusText.textContent = text;
+      status.classList.add('show');
+    }
+
+    function hideStatus() {
+      const status = document.getElementById('status');
+      status.classList.remove('show');
+    }
+
+    // تتبع التقدم
+    exporter.onProgress(progress => {
+      const stages = {
+        'initializing': 'جاري التحضير...',
+        'analyzing': 'تحليل المحتوى...',
+        'preprocessing': 'معالجة مسبقة...',
+        'rendering': 'رسم المحتوى...',
+        'optimizing': 'تحسين الجودة...',
+        'exporting': 'التصدير...',
+        'complete': 'اكتمل! 🎉'
+      };
+
+      showStatus(`${progress.percent}% - ${stages[progress.stage] || progress.stage}`);
+
+      if (progress.percent === 100) {
+        setTimeout(hideStatus, 2000);
+      }
+    });
+
+    // دوال التصدير
+    async function exportUltra() {
+      try {
+        const result = await exporter.export('#contentToExport', {
+          quality: AdvancedExporter.QUALITY_PRESETS.ULTRA
+        });
+        await exporter.download(result, 'ultra-quality');
+        alert('تم التصدير بجودة ULTRA! 🔥');
+      } catch (error) {
+        alert('خطأ: ' + error.message);
+      }
+    }
+
+    async function exportHigh() {
+      try {
+        const result = await exporter.export('#contentToExport', {
+          quality: AdvancedExporter.QUALITY_PRESETS.HIGH
+        });
+        await exporter.download(result, 'high-quality');
+        alert('تم التصدير بجودة عالية! ⭐');
+      } catch (error) {
+        alert('خطأ: ' + error.message);
+      }
+    }
+
+    async function exportBalanced() {
+      try {
+        const result = await exporter.export('#contentToExport', {
+          quality: AdvancedExporter.QUALITY_PRESETS.BALANCED
+        });
+        await exporter.download(result, 'balanced');
+        alert('تم التصدير المتوازن! ⚖️');
+      } catch (error) {
+        alert('خطأ: ' + error.message);
+      }
+    }
+
+    async function exportWithWatermark() {
+      try {
+        const result = await exporter.export('#contentToExport', {
+          watermark: {
+            text: '⚡ سري للغاية ⚡',
+            fontSize: '60px',
+            color: 'rgba(255, 0, 0, 0.8)',
+            opacity: 0.15
+          },
+          quality: AdvancedExporter.QUALITY_PRESETS.HIGH
+        });
+        await exporter.download(result, 'with-watermark');
+        alert('تم التصدير مع علامة مائية! 💧');
+      } catch (error) {
+        alert('خطأ: ' + error.message);
+      }
+    }
+
+    async function exportWithHeaderFooter() {
+      try {
+        const result = await exporter.export('#contentToExport', {
+          header: {
+            text: 'مستندي - صفحة {page}',
+            fontSize: 12,
+            color: '#667eea'
+          },
+          footer: {
+            text: '© 2025 - شركتي',
+            fontSize: 10,
+            color: '#888888'
+          },
+          quality: AdvancedExporter.QUALITY_PRESETS.HIGH
+        });
+        await exporter.download(result, 'with-header-footer');
+        alert('تم التصدير مع رأس وتذييل! 📋');
+      } catch (error) {
+        alert('خطأ: ' + error.message);
+      }
+    }
+
+    async function exportPrintReady() {
+      try {
+        const result = await exporter.export('#contentToExport', {
+          template: 'PRINT_READY'
+        });
+        await exporter.download(result, 'print-ready');
+        alert('جاهز للطباعة! 🖨️');
+      } catch (error) {
+        alert('خطأ: ' + error.message);
+      }
+    }
+
+    async function exportEmailFriendly() {
+      try {
+        const result = await exporter.export('#contentToExport', {
+          template: 'EMAIL_FRIENDLY'
+        });
+        await exporter.download(result, 'email-friendly');
+        alert('جاهز للإرسال بالإيميل! 📧');
+      } catch (error) {
+        alert('خطأ: ' + error.message);
+      }
+    }
+
+    async function exportMultiFormat() {
+      try {
+        showStatus('جاري التصدير بعدة صيغ...');
+        const result = await exporter.export('#contentToExport', {
+          format: AdvancedExporter.FORMATS.MULTI,
+          formats: ['pdf', 'png', 'jpeg']
+        });
+
+        for (const [format, data] of Object.entries(result)) {
+          await exporter.download(data, `multi-format-${format}`);
+        }
+
+        hideStatus();
+        alert('تم التصدير بـ 3 صيغ! 🎯\nPDF + PNG + JPEG');
+      } catch (error) {
+        hideStatus();
+        alert('خطأ: ' + error.message);
+      }
+    }
+
+    async function exportPNG() {
+      try {
+        const result = await exporter.export('#contentToExport', {
+          format: AdvancedExporter.FORMATS.PNG,
+          quality: AdvancedExporter.QUALITY_PRESETS.HIGH
+        });
+        await exporter.download(result, 'export-image');
+        alert('تم التصدير كصورة PNG! 🖼️');
+      } catch (error) {
+        alert('خطأ: ' + error.message);
+      }
+    }
+
+    // رسالة ترحيب
+    console.log('%c🔥 HTML2PDF Advanced 🔥', 'font-size: 24px; color: #667eea; font-weight: bold;');
+    console.log('%cنظام تصدير خورافي - شغال محلياً!', 'font-size: 16px; color: #764ba2;');
+    console.log('جرّب الأزرار في الصفحة! 💪');
+  </script>
+</body>
+</html>
